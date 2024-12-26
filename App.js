@@ -108,15 +108,15 @@ const App = () => {
           style={[
             styles.row,
             {
-              paddingLeft: level * 20, // Indent based on nesting level
-              marginLeft: level > 0 ? 10 : 0, // Additional margin for children
-              paddingRight: level > 0 ? 10 : 0, // Reduce width for children
+              marginHorizontal: level * 20,
+              borderBottomWidth: level == 4 ? 0 : 1,
+
               backgroundColor: rowBackgroundColors[level] || 'rgba(0, 0, 0, 0.5)', // Default color if level exceeds defined colors
             },
           ]}
         >
           {level < 4 ? ( // Only show toggle icon if nesting level is less than 4
-            <TouchableOpacity onPress={handleToggle} style={{ padding: 3 }}>
+            <TouchableOpacity onPress={handleToggle} style={{ padding: 10, marginHorizontal: 10 }}>
               {level === 0 ? (
                 <Icon
                   name={isExpanded ? 'chevron-down-outline' : 'chevron-forward-outline'}
@@ -128,9 +128,17 @@ const App = () => {
               )}
             </TouchableOpacity>
           ) : (
-            <View style={{ width: 20 }} /> // Placeholder for alignment
+            <View style={{ width: 60 }} /> // Placeholder for alignment
           )}
-          <Text style={styles.cell}>{item.username}</Text>
+          {/* Adjust only the Username column */}
+          <View
+            style={[
+              styles.usernameContainer,
+              { width: 120 - level * 20 }, // Indent based on nesting level
+            ]}
+          >
+            <Text style={styles.cell}>{item.username}</Text>
+          </View>
           <Text style={styles.cell}>{item.total_referrals}</Text>
           <Text style={styles.cell}>{item.coins_bought_by_affiliates}</Text>
           <Text style={styles.cell}>{item.coins_spent_by_affiliates}</Text>
@@ -160,10 +168,12 @@ const App = () => {
 
 
 
+
+
   return (
     <SafeAreaView style={styles.container}>
       {/* <StatusBar barStyle="dark-content" /> */}
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <ScrollView horizontal contentInsetAdjustmentBehavior="automatic">
         <View style={styles.section}>
           <Text style={styles.title}>Main Affiliate Member Details</Text>
           {error ? (
@@ -172,6 +182,7 @@ const App = () => {
             <>
               <View style={{ backgroundColor: 'rgb(0, 128, 0)', paddingVertical: 5 }}>
                 <View style={styles.headerRow}>
+                  <Text style={[styles.headerCell, { width: 60 }]}></Text>
                   <Text style={styles.headerCell}>Username</Text>
                   <Text style={styles.headerCell}>Total Referrals</Text>
                   <Text style={styles.headerCell}>Coins Bought</Text>
@@ -180,6 +191,7 @@ const App = () => {
                   <Text style={styles.headerCell}>Coins User Bought</Text>
                 </View>
                 <View style={styles.footerRow}>
+                  <Text style={[styles.footerCell, { width: 60 }]}></Text>
                   <Text style={styles.footerCell}>Tier 1</Text>
                   <Text style={styles.footerCell}>
                     {memberDetails.total.total_referrals}
@@ -235,42 +247,50 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#fff',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   headerRow: {
     flexDirection: 'row',
     backgroundColor: 'rgb(0, 128, 0)',
-    padding: 10,
+    paddingVertical: 10,
+    width: '100%',
   },
   row: {
     flexDirection: 'row',
     backgroundColor: 'rgba(253, 79, 63, 0.51)',
-    padding: 10,
+    // padding: 10,
+    width: '100%',
     borderBottomWidth: 1,
     borderColor: 'rgb(81, 81, 81)',
   },
   footerRow: {
     flexDirection: 'row',
     backgroundColor: '#f1c40f',
-    padding: 10,
+    paddingVertical: 10,
   },
   headerCell: {
-    flex: 1,
+    width: 120, // Set a fixed width for each cell
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#fff',
+    // marginHorizontal: 5,
     fontSize: 12,
   },
   cell: {
-    flex: 1,
+    width: 120, // Same fixed width for content cells
     textAlign: 'center',
     color: '#fff',
+    alignSelf: 'center'
+    // marginHorizontal: 5,
+
   },
   footerCell: {
-    flex: 1,
+    width: 120, // Same fixed width for footer cells
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#000',
+    // marginHorizontal: 5,
+
   },
   error: {
     fontSize: 14,
@@ -278,14 +298,19 @@ const styles = StyleSheet.create({
   },
   expandedRow: {
     backgroundColor: '#000',
-    // padding: 10,
-    paddingVertical: 10
+    paddingVertical: 10,
+    // marginHorizontal: 5
   },
   expandedCell: {
     fontSize: 14,
     color: '#555',
     marginVertical: 2,
   },
+  usernameContainer: {
+    width: 120, // Maintain fixed width for alignment
+    justifyContent: 'center',
+  },
 });
+
 
 export default App;
