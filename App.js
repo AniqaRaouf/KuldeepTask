@@ -144,6 +144,11 @@ const App = () => {
           <Text style={styles.cell}>{item.coins_spent_by_affiliates}</Text>
           <Text style={styles.cell}>{item.coins_awarded_to_affiliates}</Text>
           <Text style={styles.cell}>{item.coins_user_bought}</Text>
+          <Text style={styles.cell}>{item.coins_user_spent}</Text>
+          <Text style={styles.cell}>{item.coins_awarded_to_user}</Text>
+          <Text style={styles.cell}>{item.signup_date}</Text>
+          <Text style={styles.cell}>{item.last_active}</Text>
+
         </View>
 
         {/* Expanded Section */}
@@ -189,6 +194,11 @@ const App = () => {
                   <Text style={styles.headerCell}>Coins Spent</Text>
                   <Text style={styles.headerCell}>Coins Awarded</Text>
                   <Text style={styles.headerCell}>Coins User Bought</Text>
+                  <Text style={styles.headerCell}>Coins User Spent</Text>
+                  <Text style={styles.headerCell}>Coins Awarded to User</Text>
+                  <Text style={styles.headerCell}>Signed Up Date</Text>
+                  <Text style={styles.headerCell}>Last Active Date</Text>
+
                 </View>
                 <View style={styles.footerRow}>
                   <Text style={[styles.footerCell, { width: 60 }]}></Text>
@@ -208,6 +218,14 @@ const App = () => {
                   <Text style={styles.footerCell}>
                     {memberDetails.total.coins_user_bought}
                   </Text>
+                  <Text style={styles.footerCell}>
+                    {memberDetails.total.coins_user_spent}
+                  </Text>
+                  <Text style={styles.footerCell}>
+                    {memberDetails.total.coins_awarded_to_user}
+                  </Text>
+
+
                 </View>
               </View>
               <FlatList
